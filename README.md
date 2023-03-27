@@ -11,7 +11,7 @@
 ### How the Simulator Works:
 The simulator has two main functions:
 1. Displaying the rabbits and foxes for 300 iterations 
-   After every iteration a board with F’s and R’sis printed with the population counts, representing foxes and rabbits respectively.
+   After every iteration a board with F’s and R’s is printed with the population counts, representing foxes and rabbits respectively.
 2. Plotting the population of rabbits and foxes over time
    After the 300 iterations, the simulator plots the population of rabbits and foxes over each generation.
 
