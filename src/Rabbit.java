@@ -16,10 +16,12 @@ public class Rabbit extends Organism {
 
     //Move method for Rabbit
     public void moveRabbit(int dir) {
+        // Check if the given direction is valid
         if (dir < 1 || dir > 4) {
             System.out.println("Invalid direction/Input Parameter");
             System.exit(0);
         }
+        // Move the rabbit to the new position based on the given direction
         switch (dir) {
             case 1 -> {
                 Board.field[this.getRowPos() - 1][this.getColPos()] = this;

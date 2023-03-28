@@ -1,16 +1,18 @@
+// Organism class represents an organism in the simulation, which can be either a Rabbit or a Fox.
 public class Organism {
-    int breedTime;
-    int timeSinceBreed;
+    int breedTime; // the time it takes for the organism to breed
+    int timeSinceBreed; // the time that has passed since the organism last bred
     char symbol; // 'R' for rabbit, 'F' for fox
-    int rowPos;
-    int colPos;
+    int rowPos; // the row position of the organism on the board
+    int colPos; // the column position of the organism on the board
 
     // Flags for edge of the Board
-    boolean topFlag;
-    boolean bottomFlag;
-    boolean leftFlag;
-    boolean rightFlag;
+    boolean topFlag; // true if the organism is at the top of the board
+    boolean bottomFlag; // true if the organism is at the bottom of the board
+    boolean leftFlag; // true if the organism is at the left of the board
+    boolean rightFlag; // true if the organism is at the right of the board
 
+    // Constructs an organism object with default values
     public Organism() {
         this.setRowPos(-1);
         this.setColPos(-1);
@@ -20,13 +22,13 @@ public class Organism {
         this.leftFlag = true;
         this.rightFlag = true;
     }
-
+    // Constructs an organism object with a given row and column position
     public Organism(int rowPos, int colPos) {
         this.setRowPos(rowPos);
         this.setColPos(colPos);
         this.timeSinceBreed = 0;
     }
-
+    // Constructs an organism object with the same attributes as another organism object
     public Organism(Organism o) {
         this.symbol = o.symbol;
         this.setRowPos(o.getRowPos());
@@ -34,7 +36,7 @@ public class Organism {
         this.breedTime = o.breedTime;
         this.timeSinceBreed = o.timeSinceBreed;
     }
-
+    // Returns the symbol of the organism ('R' for rabbit and 'F' for fox)
     public char getSymbol() {
         return this.symbol;
     }
@@ -46,7 +48,7 @@ public class Organism {
     public int getColPos() {
         return this.colPos;
     }
-
+    // Sets the row position of the organism on the board
     public void setRowPos(int row) {
         this.topFlag = false;
         this.bottomFlag = false;
@@ -57,6 +59,7 @@ public class Organism {
             this.bottomFlag = true;
         }
     }
+    // Sets the column position of the organism on the board
         public void setColPos(int col) {
             this.leftFlag = false;
             this.rightFlag = false;

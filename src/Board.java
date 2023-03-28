@@ -4,27 +4,30 @@ import java.util.Collections;
 import java.util.Random;
 
 
+// create a 20x20 grid of Organism objects
+// track the number of rabbits and foxes on the board
+// create a Random object to generate random numbers for placing the animals on the board
 public class Board {
     static Organism[][] field = new Organism[20][20];
     static int numOfRabbits;
     static int numOfFoxes;
     Random randomNumGen = new Random();
-
+    // flags to keep track of scanning positions
     static int rowScan = 0;
     static int colScan = 0;
-
+    // constructor for a new Board with default number of rabbits and foxes
     public Board() {
         numOfRabbits = 65;
         numOfFoxes = 7;
         initializeBoard(numOfRabbits, numOfFoxes);
     }
-
+    // constructor for a new Board with a specified number of rabbits and foxes
     public Board(int rabbits, int foxes) {
         numOfRabbits = rabbits;
         numOfFoxes = foxes;
         initializeBoard(numOfRabbits, numOfFoxes);
     }
-
+    // initialize the board with the specified number of rabbits and foxes
     public void initializeBoard(int numRabbit, int numFox) {
         for (int i = 0; i < numRabbit; i++) {
             place(new Rabbit(), numRabbit);
@@ -33,20 +36,21 @@ public class Board {
             place(new Fox(), numFox);
         }
     }
-
+    // check if a cell on the board is occupied by an organism
     public boolean isOccupied(int row, int col) {
         return Board.field[row][col] != null;
     }
 
+    // place an organism on a random unoccupied cell on the board
+    // keep generating random positions until an unoccupied cell is found
     public void place(Organism o, int numOrganism) {
         int rowPos = randomNumGen.nextInt(20);
         int colPos = randomNumGen.nextInt(20);
-
         while (this.isOccupied(rowPos, colPos)) {
             rowPos = randomNumGen.nextInt(20);
             colPos = randomNumGen.nextInt(20);
         }
-
+        // create a new Rabbit or Fox object and place it on the board
         if (o instanceof Rabbit) {
             Board.field[rowPos][colPos] = new Rabbit(rowPos, colPos);
         } else if (o instanceof Fox) {
@@ -56,31 +60,32 @@ public class Board {
             System.exit(0);
         }
     }
+    // get the organism at a specific position on the board
     public static Organism getOrganism(int row, int col) {
         return Board.field[row][col];
     }
-
+    // get the organism at a specific position on the board given an array of coordinates
     public static Organism getOrganism(int[] coords) {
         return Board.field[coords[0]][coords[1]];
     }
-
-    public boolean rabbitNearby(Fox f)
-    {
+    // check if there is a rabbit nearby a fox
+    public boolean rabbitNearby(Fox f) {
+        // check if there is a rabbit to the left or above the fox
         if (f.topFlag && f.leftFlag) {
             return (getOrganism(f.getRowPos(), f.getColPos() + 1) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos() + 1, f.getColPos()) instanceof Rabbit);
         }
-
+        // check if there is a rabbit to the right or below the fox
         else if (f.bottomFlag && f.rightFlag) {
             return (getOrganism(f.getRowPos() - 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() - 1) instanceof Rabbit);
         }
-
+        // check if there is a rabbit to the right or above the fox
         else if (f.topFlag && f.rightFlag) {
             return (getOrganism(f.getRowPos() + 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() - 1) instanceof Rabbit);
         }
-
+        // check if there is a rabbit to the left or below the fox
         else if (f.bottomFlag && f.leftFlag) {
             return (getOrganism(f.getRowPos() - 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() + 1) instanceof Rabbit);
@@ -90,31 +95,27 @@ public class Board {
                     (getOrganism(f.getRowPos() + 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() - 1) instanceof Rabbit);
         }
-
         else if (f.rightFlag) {
             return (getOrganism(f.getRowPos() - 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos() + 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() - 1) instanceof Rabbit);
         }
-
         else if (f.bottomFlag) {
             return (getOrganism(f.getRowPos() - 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() + 1) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() - 1) instanceof Rabbit);
         }
-
         else if (f.leftFlag) {
             return (getOrganism(f.getRowPos() - 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() + 1) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos() + 1, f.getColPos()) instanceof Rabbit);
         }
-
         else return (getOrganism(f.getRowPos() - 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() + 1) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos() + 1, f.getColPos()) instanceof Rabbit) ||
                     (getOrganism(f.getRowPos(), f.getColPos() - 1) instanceof Rabbit);
     }
-
+    // check if there is an empty cell adjacent to an organism
     public boolean emptyCellAdj(Organism Animal) {
         if (Animal.topFlag && Animal.leftFlag) {
             return (getOrganism(Animal.getRowPos(), Animal.getColPos() + 1) == null) ||
@@ -164,7 +165,7 @@ public class Board {
                     (getOrganism(Animal.getRowPos() + 1, Animal.getColPos()) == null) ||
                     (getOrganism(Animal.getRowPos(), Animal.getColPos() - 1) == null);
     }
-
+    // print the board with the organisms
     public void printBoard() {
 
         JFrame frame = new JFrame();
@@ -191,6 +192,7 @@ public class Board {
         System.out.println("Number of Rabbits: " + numOfRabbits);
         System.out.println("Number of Foxes: " + numOfFoxes);
     }
+    // This method removes an animal from the field, given its row and column position. It also checks the type of the animal and updates the number of rabbits or foxes accordingly.
     public void removeAnimal(int row, int col)
     {
         if (field[row][col] == null) {
@@ -205,6 +207,7 @@ public class Board {
         }
         field[row][col] = null;
     }
+    // This method returns an array of integers representing random directions.
     public static Integer[] randomDirections() {
         Integer[] directionArray = new Integer[] {1, 2, 3, 4};
 
@@ -212,14 +215,14 @@ public class Board {
 
         return directionArray;
     }
-    /*
+    // These two methods return the number of rabbits or foxes on the field.
     public int getRabbitNumber(){
         return numOfRabbits;
     }
     public int getFoxNumber(){
         return numOfFoxes;
     }
-    */
+    // This method scans the field for rabbits and returns their coordinates as an array of integers.
     public static int[] rabbitScanner() {
         for (int j = colScan; j < 20; j++) {
             if (field[rowScan][j] instanceof Rabbit) {
@@ -258,6 +261,7 @@ public class Board {
         rowScan = 0;
         return new int[] {-1, -1};
     }
+    // This method scans the field for foxes and returns their coordinates as an array of integers.
     public static int[] foxScanner() {
         for (int j = colScan; j < 20; j++) {
             if (field[rowScan][j] instanceof Fox) {
@@ -356,6 +360,7 @@ public class Board {
             Animal.timeSinceBreed++;
         }
     }
+    // This method checks if an animal can breed and if there is an empty cell adjacent to it.
     public void breed(Organism Animal)
     {
         if ((Animal.timeSinceBreed == Animal.breedTime) && this.emptyCellAdj(Animal)) {
@@ -455,6 +460,7 @@ public class Board {
             }
         }
     }
+    // This method checks if a fox has not eaten for a certain amount of time and if so, it removes the fox from the board.
     public void starve(Fox f) {
         if (f.timeSinceLastMeal >= Fox.StarveTime) {
             this.removeAnimal(f.getRowPos(), f.getColPos());

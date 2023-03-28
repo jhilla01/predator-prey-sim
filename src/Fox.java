@@ -4,13 +4,13 @@ public class Fox extends Organism {
     public Fox() {
         super();
         this.symbol = 'F';
-        this.breedTime = 6;
+        this.breedTime = 7;
         this.timeSinceLastMeal = 0;
     }
     public Fox(int rowPos, int colPos) {
         super(rowPos, colPos);
         this.symbol = 'F';
-        this.breedTime = 6;
+        this.breedTime = 7;
         this.timeSinceLastMeal = 0;
     }
 
@@ -20,11 +20,14 @@ public class Fox extends Organism {
         this.breedTime = f.breedTime;
         this.timeSinceLastMeal = f.timeSinceLastMeal;
     }
+    //Move method for Fox
     public void moveFox(int dir) {
+        // Check if the given direction is valid
         if (dir < 1 || dir > 4) {
             System.out.println("Invalid direction/Input Parameter");
             System.exit(0);
         }
+        // Move the fox to the new position based on the given direction
         switch (dir) {
             case 1 -> {
                 Board.field[this.getRowPos() - 1][this.getColPos()] = null;
@@ -53,5 +56,4 @@ public class Fox extends Organism {
         }
 
     }
-
 }
