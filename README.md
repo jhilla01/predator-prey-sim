@@ -10,15 +10,16 @@
 
 ### How the Simulator Works:
 The simulator has two main functions:
-1. Displaying the rabbits and foxes for 250 iterations 
-   After every iteration a board with F’s and R’sis printed with the population counts, representing foxes and rabbits respectively.
+1. Displaying the rabbits and foxes for 300 iterations 
+   After every iteration a board with F’s and R’s is printed with the population counts, representing foxes and rabbits respectively.
 2. Plotting the population of rabbits and foxes over time
-   After the 250 iterations, the simulator plots the population of rabbits and foxes over each generation.
+   After the 300 iterations, the simulator plots the population of rabbits and foxes over each generation.
 
 ### How to Edit the Simulator:
 1. Open the src folder in your IDE
-2. Edit the starting parameters in the Simulator.java file
-3. Run the simulator using the command: java Simulator
+2. Edit the starting parameters (numOfRabbits & numOfFoxes) in the Board.java file
+3. Edit the breedTime and StarveTime in Fox.java and Rabbit.java
+4. Run the simulator using the command: java Simulator
 
 ### How to Run the Simulator:
 1. Download the src folder
